@@ -5,18 +5,23 @@
 #include "matrixMultiplication.h"
 
 int main(int argc, char *argv[]) {
-    if (argc != 4) {
-        fprintf(stderr, "Usage: %s <m> <n> <p>\n", argv[0]);
+    if (argc != 5) {
+        fprintf(stderr, "Usage: %s <m> <n> <p> <block size>\n", argv[0]);
         return 1;
     }
 
     int m = atoi(argv[1]);
     int n = atoi(argv[2]);
     int p = atoi(argv[3]);
+    int block_size = atoi(argv[4]);
 
     if (m <= 0 || n <= 0 || p <= 0) {
         fprintf(stderr, "Matrix dimensions must be positive integers\n");
         return 1;
+    }
+
+    if (block_size <= 1) {
+        fprintf(stderr, "Block size must be a positive integer");
     }
 
     int** a = allocateMatrix(m, n); // Matrix A of size m x n
@@ -64,9 +69,9 @@ int main(int argc, char *argv[]) {
     // Perform block matrix multiplication
     setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
     start = omp_get_wtime();
-    matrixMultiplyParallelBlock(a, b, c, m, n, p);
+    matrixMultiplyParallelBlock(a, b, c, m, n, p, block_size);
     end = omp_get_wtime();
-    printf("Parallel block  matrix multiplication took %f seconds.\n", end - start);
+    printf("Parallel block matrix multiplication took %f seconds.\n", end - start);
 
     // Free the allocated memory
     for (int i = 0; i < m; i++) free(a[i]);

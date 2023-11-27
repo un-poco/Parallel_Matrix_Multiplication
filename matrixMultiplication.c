@@ -37,13 +37,13 @@ void matrixMultiplyParallel(int **a, int **b, int **c, int m, int n, int p) {
 }
 
 // Block Matrix Multiplication Algorithm
-void matrixMultiplyParallelBlock(int **a, int **b, int **c, int m, int n, int p) {
+void matrixMultiplyParallelBlock(int **a, int **b, int **c, int m, int n, int p, int block_size) {
     #pragma omp parallel for collapse(2)
-    for (int i = 0; i < m; i += BLOCK_SIZE) {
-        for (int j = 0; j < p; j += BLOCK_SIZE) {
-            for (int ii = i; ii < i + BLOCK_SIZE && ii < m; ++ii) {
+    for (int i = 0; i < m; i += block_size) {
+        for (int j = 0; j < p; j += block_size) {
+            for (int ii = i; ii < i + block_size && ii < m; ++ii) {
                 for (int k = 0; k < n; ++k) {
-                    for (int jj = j; jj < j + BLOCK_SIZE && jj < p; ++jj) {
+                    for (int jj = j; jj < j + block_size && jj < p; ++jj) {
                         c[ii][jj] += a[ii][k] * b[k][jj];
                     }
                 }
