@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
+#include "strassen.h"
 
-#define BLOCK_SIZE 16
+
+#define BLOCK_SIZE 64
 
 // Serial matrix multiplication
 void matrixMultiplySerial(int **a, int **b, int **c, int m, int n, int p) {
@@ -28,7 +30,7 @@ void matrixMultiplySerial2(int **a, int **b, int **c, int m, int n, int p) {
 
 // Parallel matrix multiplication using OpenMP
 void matrixMultiplyParallel(int **a, int **b, int **c, int m, int n, int p) {
-    #pragma omp parallel for
+    #pragma omp parallel for collapse(2) 
     for (int i = 0; i < m; i++) {
         for (int k = 0; k < n; k++) {
             for (int j = 0; j < p; j++) {
@@ -53,6 +55,38 @@ void matrixMultiplyParallelBlock(int **a, int **b, int **c, int m, int n, int p)
         }
     }
 }
+
+int** transposeMatrix(int **matrix, int rows, int cols) {
+    int **transposed = (int **)malloc(cols * sizeof(int *));
+    #pragma omp parallel for
+    for (int i = 0; i < cols; ++i) {
+        transposed[i] = (int *)malloc(rows * sizeof(int));
+        for (int j = 0; j < rows; ++j) {
+            transposed[i][j] = matrix[j][i];
+        }
+    }
+    return transposed;
+}
+
+
+void matrixMultiplyParallelTranspose(int **a, int **b, int **c, int m, int n, int p) {
+    int **bTransposed = transposeMatrix(b, n, p);
+    #pragma omp parallel for
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < p; j++)  {
+            for (int k = 0; k < n; k++) {
+                c[i][j] += a[i][k] * bTransposed[j][k]; // Use transposed B
+            }
+        }
+    }
+
+    // Free the transposed matrix after use
+    for (int i = 0; i < p; ++i) {
+        free(bTransposed[i]);
+    }
+    free(bTransposed);
+}
+
 
 // Function to allocate memory for a matrix
 int** allocateMatrix(int rows, int cols) {
@@ -115,12 +149,6 @@ int main(int argc, char *argv[]) {
     initializeMatrix(b, n, p);
     setMatrixZeros(c, m, p);
 
-    // Print initial matrices
-    // printf("Matrix A:\n");
-    // printMatrix(a, m, n);
-
-    // printf("\nMatrix B:\n");
-    // printMatrix(b, n, p);
 
     double start, end;
     /*
@@ -139,21 +167,39 @@ int main(int argc, char *argv[]) {
     printf("Updated serial matrix multiplication took %f seconds.\n", end - start);
     */
 
-    // Perform parallel matrix multiplication
+    // parallel matrix multiplication
     setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
     start = omp_get_wtime();
     matrixMultiplyParallel(a, b, c, m, n, p);
     end = omp_get_wtime();
     printf("Parallel matrix multiplication took %f seconds.\n", end - start);
-    // printf("\nResult of Parallel Multiplication (OpenMP):\n");
-    // printMatrix(c, m, p);
 
-    // Perform block matrix multiplication
+    // block matrix multiplication
     setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
     start = omp_get_wtime();
     matrixMultiplyParallelBlock(a, b, c, m, n, p);
     end = omp_get_wtime();
-    printf("Parallel block  matrix multiplication took %f seconds.\n", end - start);
+    printf("Parallel block matrix multiplication took %f seconds.\n", end - start);
+
+    // transpose(not helpful)
+    start = omp_get_wtime();
+    matrixMultiplyParallelTranspose(a, b, c, m, n, p);
+    end = omp_get_wtime();
+    printf("Parallel transpose matrix multiplication took %f seconds.\n", end - start);
+
+    // strassen matrix multiplication(only m=n=p=2^k)
+    start = omp_get_wtime();
+    omp_set_num_threads(8);
+    #pragma omp parallel
+    {
+    #pragma omp single
+        {
+            strassen(n, a, b);
+        }
+    }
+    end = omp_get_wtime();
+    printf("Parallel strassen matrix multiplication took %f seconds.\n", end - start);
+    
 
     // Free the allocated memory
     for (int i = 0; i < m; i++) free(a[i]);
