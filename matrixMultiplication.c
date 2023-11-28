@@ -70,11 +70,13 @@ void matrixMultiplyParallelTranspose(int **a, int **b, int **c, int m, int n, in
 void matrixMultiplyParallelBlock(int **a, int **b, int **c, int m, int n, int p, int block_size) {
     #pragma omp parallel for collapse(2)
     for (int i = 0; i < m; i += block_size) {
-        for (int j = 0; j < p; j += block_size) {
-            for (int ii = i; ii < i + block_size && ii < m; ++ii) {
-                for (int k = 0; k < n; ++k) {
-                    for (int jj = j; jj < j + block_size && jj < p; ++jj) {
-                        c[ii][jj] += a[ii][k] * b[k][jj];
+        for (int k = 0; k < n; k += block_size) {
+            for (int j = 0; j < p; j += block_size) {
+                for (int ii = i; ii < i + block_size && ii < m; ++ii) {
+                    for (int kk = 0; kk < k + block_size && kk < n; ++kk) {
+                        for (int jj = j; jj < j + block_size && jj < p; ++jj) {
+                            c[ii][jj] += a[ii][kk] * b[kk][jj];
+                        }
                     }
                 }
             }
@@ -98,13 +100,4 @@ void matrixMultiplyParallelBlock(int **a, int **b, int **c, int m, int n, int p,
     //         }
     //     }
     // }
-}
-
-// Function to allocate memory for a matrix
-int** allocateMatrix(int rows, int cols) {
-    int** matrix = (int**)malloc(rows * sizeof(int*));
-    for (int i = 0; i < rows; i++) {
-        matrix[i] = (int*)malloc(cols * sizeof(int));
-    }
-    return matrix;
 }
