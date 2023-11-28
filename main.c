@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
     printf("Updated serial matrix multiplication took %f seconds.\n", end - start);
     */
 
-    // Perform parallel matrix multiplication
+    // Parallel matrix multiplication
     setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
     start = omp_get_wtime();
     matrixMultiplyParallel(a, b, c, m, n, p);
@@ -67,14 +67,21 @@ int main(int argc, char *argv[]) {
     // printf("\nResult of Parallel Multiplication (OpenMP):\n");
     // printMatrix(c, m, p);
 
-    // Perform block matrix multiplication
+    // Block matrix multiplication
     setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
     start = omp_get_wtime();
     matrixMultiplyParallelBlock(a, b, c, m, n, p, block_size);
     end = omp_get_wtime();
     printf("Parallel block matrix multiplication took %f seconds.\n", end - start);
+    
+    // Transpose
+    setMatrixZeros(c, m, p);
+    start = omp_get_wtime();
+    matrixMultiplyParallelTranspose(a, b, c, m, n, p);
+    end = omp_get_wtime();
+    printf("Parallel transpose matrix multiplication took %f seconds.\n", end - start);
 
-    // strassen matrix multiplication(only m=n=p=2^k)
+    // Strassen matrix multiplication(only m=n=p=2^k)
     if(n==m && m==p && (m & (m - 1)) == 0){
         start = omp_get_wtime();
         omp_set_num_threads(8);

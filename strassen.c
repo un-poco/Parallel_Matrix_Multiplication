@@ -44,7 +44,7 @@ void freeMatrix(int n, int** mat) {
 int** naive(int n, int** mat1, int** mat2) {
     int** prod = allocateMatrix2(n);
 
-#pragma omp parallel for collapse(2)
+    #pragma omp parallel for collapse(2)
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             prod[i][j] = 0;
