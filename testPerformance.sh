@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gcc -Wall -std=c99 -fopenmp -o matrixMultiplication main.c matrixOps.c matrixMultiplication.c
+gcc -Wall -std=c99 -fopenmp -o matrixMultiplication main.c matrixOps.c matrixMultiplication.c strassen.c
 
 # Define the combinations of m, n, p as array of arrays
 declare -a combinations

@@ -3,6 +3,7 @@
 #include <omp.h>
 #include "matrixOps.h"
 #include "matrixMultiplication.h"
+#include "strassen.h"
 
 int main(int argc, char *argv[]) {
     if (argc != 5) {
@@ -72,6 +73,21 @@ int main(int argc, char *argv[]) {
     matrixMultiplyParallelBlock(a, b, c, m, n, p, block_size);
     end = omp_get_wtime();
     printf("Parallel block matrix multiplication took %f seconds.\n", end - start);
+
+    // strassen matrix multiplication(only m=n=p=2^k)
+    if(n==m && m==p && (m & (m - 1)) == 0){
+        start = omp_get_wtime();
+        omp_set_num_threads(8);
+        #pragma omp parallel
+        {
+        #pragma omp single
+            {
+                c=strassen(n, a, b);
+            }
+        }
+        end = omp_get_wtime();
+        printf("Parallel strassen matrix multiplication took %f seconds.\n", end - start);
+    }
 
     // Free the allocated memory
     for (int i = 0; i < m; i++) free(a[i]);
