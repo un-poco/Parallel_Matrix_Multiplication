@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
         {
         #pragma omp single
             {
-                c=strassen(n, a, b);
+                strassen(n, a, b);
             }
         }
         end = omp_get_wtime();
