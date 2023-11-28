@@ -42,30 +42,25 @@ int main(int argc, char *argv[]) {
     // printMatrix(b, n, p);
 
     double start, end;
-    /*
-    // Perform serial matrix multiplication
-    start = omp_get_wtime();
-    matrixMultiplySerial(a, b, c, m, n, p);
-    end = omp_get_wtime();
-    printf("Serial matrix multiplication took %f seconds.\n", end - start);
-    // printf("\nResult of Serial Multiplication:\n");
-    // printMatrix(c, m, p);
+    
+    // // Perform serial matrix multiplication
+    // start = omp_get_wtime();
+    // matrixMultiplySerial(a, b, c, m, n, p);
+    // end = omp_get_wtime();
+    // printf("Serial matrix multiplication took %f seconds.\n", end - start);
 
     // Perform updated version of serial matrix multiplication
     start = omp_get_wtime();
     matrixMultiplySerial2(a, b, c, m, n, p);
     end = omp_get_wtime();
     printf("Updated serial matrix multiplication took %f seconds.\n", end - start);
-    */
-
+    
     // Parallel matrix multiplication
     setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
     start = omp_get_wtime();
     matrixMultiplyParallel(a, b, c, m, n, p);
     end = omp_get_wtime();
     printf("Parallel matrix multiplication took %f seconds.\n", end - start);
-    // printf("\nResult of Parallel Multiplication (OpenMP):\n");
-    // printMatrix(c, m, p);
 
     // Block matrix multiplication
     setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
