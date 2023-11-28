@@ -2,6 +2,15 @@
 #include <stdio.h>
 #include "matrixOps.h"
 
+// Function to allocate memory for a matrix
+int** allocateMatrix(int rows, int cols) {
+    int** matrix = (int**)malloc(rows * sizeof(int*));
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = (int*)malloc(cols * sizeof(int));
+    }
+    return matrix;
+}
+
 // Function to initialize a matrix with random values
 void initializeMatrix(int **matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
