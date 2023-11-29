@@ -25,3 +25,7 @@ Finally, we are good to go by running the ./matrixMultiplication command, with p
 Alternatively, we can run the script as follows to execute all commands in a batch.
 chmod +x testPerformance.sh
 ./testPerformance.sh
+
+For small size input matrix experiment, block size experiment and Extremely large input experiment, just need to run ./experiment1/2/3.sh accordingly.
+
+For example:  ./experiment1.sh > experiment1.txt

@@ -1,4 +1,0 @@
-For m=8192, n=8192, p=8192
-Average time for parallel matrix multiplication: 85.119053 seconds
-Average time for parallel strassen matrix multiplication: 180.924164 seconds
-

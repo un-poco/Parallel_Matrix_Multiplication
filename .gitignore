@@ -1,6 +1,11 @@
 experiment2
+experiment3
 2_sota_experiment.c
 2_sota_performance.sh
 eigen.cpp
 testSota.sh
 matrixMultiplication
+experiment1.txt
+experiment2.txt
+experiment3.txt
+th
