@@ -1,0 +1,105 @@
+For m=100, n=100, p=100, block_size=4:
+Average time for parallel block matrix multiplication: .011812 seconds
+
+For m=100, n=100, p=100, block_size=8:
+Average time for parallel block matrix multiplication: .009738 seconds
+
+For m=100, n=100, p=100, block_size=16:
+Average time for parallel block matrix multiplication: .007817 seconds
+
+For m=100, n=100, p=100, block_size=32:
+Average time for parallel block matrix multiplication: .008195 seconds
+
+For m=100, n=100, p=100, block_size=64:
+Average time for parallel block matrix multiplication: .013533 seconds
+
+For m=200, n=50, p=100, block_size=4:
+Average time for parallel block matrix multiplication: .009688 seconds
+
+For m=200, n=50, p=100, block_size=8:
+Average time for parallel block matrix multiplication: .008382 seconds
+
+For m=200, n=50, p=100, block_size=16:
+Average time for parallel block matrix multiplication: .007984 seconds
+
+For m=200, n=50, p=100, block_size=32:
+Average time for parallel block matrix multiplication: .006451 seconds
+
+For m=200, n=50, p=100, block_size=64:
+Average time for parallel block matrix multiplication: .007032 seconds
+
+For m=200, n=100, p=50, block_size=4:
+Average time for parallel block matrix multiplication: .011261 seconds
+
+For m=200, n=100, p=50, block_size=8:
+Average time for parallel block matrix multiplication: .010127 seconds
+
+For m=200, n=100, p=50, block_size=16:
+Average time for parallel block matrix multiplication: .008335 seconds
+
+For m=200, n=100, p=50, block_size=32:
+Average time for parallel block matrix multiplication: .007851 seconds
+
+For m=200, n=100, p=50, block_size=64:
+Average time for parallel block matrix multiplication: .007200 seconds
+
+For m=100, n=200, p=50, block_size=4:
+Average time for parallel block matrix multiplication: .017538 seconds
+
+For m=100, n=200, p=50, block_size=8:
+Average time for parallel block matrix multiplication: .013952 seconds
+
+For m=100, n=200, p=50, block_size=16:
+Average time for parallel block matrix multiplication: .010611 seconds
+
+For m=100, n=200, p=50, block_size=32:
+Average time for parallel block matrix multiplication: .009008 seconds
+
+For m=100, n=200, p=50, block_size=64:
+Average time for parallel block matrix multiplication: .008361 seconds
+
+For m=100, n=50, p=200, block_size=4:
+Average time for parallel block matrix multiplication: .009680 seconds
+
+For m=100, n=50, p=200, block_size=8:
+Average time for parallel block matrix multiplication: .008586 seconds
+
+For m=100, n=50, p=200, block_size=16:
+Average time for parallel block matrix multiplication: .008002 seconds
+
+For m=100, n=50, p=200, block_size=32:
+Average time for parallel block matrix multiplication: .006916 seconds
+
+For m=100, n=50, p=200, block_size=64:
+Average time for parallel block matrix multiplication: .008233 seconds
+
+For m=50, n=200, p=100, block_size=4:
+Average time for parallel block matrix multiplication: .018755 seconds
+
+For m=50, n=200, p=100, block_size=8:
+Average time for parallel block matrix multiplication: .014212 seconds
+
+For m=50, n=200, p=100, block_size=16:
+Average time for parallel block matrix multiplication: .010494 seconds
+
+For m=50, n=200, p=100, block_size=32:
+Average time for parallel block matrix multiplication: .010264 seconds
+
+For m=50, n=200, p=100, block_size=64:
+Average time for parallel block matrix multiplication: .010546 seconds
+
+For m=50, n=100, p=200, block_size=4:
+Average time for parallel block matrix multiplication: .013127 seconds
+
+For m=50, n=100, p=200, block_size=8:
+Average time for parallel block matrix multiplication: .010834 seconds
+
+For m=50, n=100, p=200, block_size=16:
+Average time for parallel block matrix multiplication: .009836 seconds
+
+For m=50, n=100, p=200, block_size=32:
+Average time for parallel block matrix multiplication: .009433 seconds
+
+For m=50, n=100, p=200, block_size=64:
+Average time for parallel block matrix multiplication: .009674 seconds
+

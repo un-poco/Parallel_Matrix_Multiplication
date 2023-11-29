@@ -34,31 +34,8 @@ int main(int argc, char *argv[]) {
     initializeMatrix(b, n, p);
     setMatrixZeros(c, m, p);
 
-    // Print initial matrices
-    // printf("Matrix A:\n");
-    // printMatrix(a, m, n);
-
-    // printf("\nMatrix B:\n");
-    // printMatrix(b, n, p);
-
     double start, end;
-    /*
-    // Perform serial matrix multiplication
-    start = omp_get_wtime();
-    matrixMultiplySerial(a, b, c, m, n, p);
-    end = omp_get_wtime();
-    printf("Serial matrix multiplication took %f seconds.\n", end - start);
-    // printf("\nResult of Serial Multiplication:\n");
-    // printMatrix(c, m, p);
-    */
-
-    // Perform updated version of serial matrix multiplication
-    start = omp_get_wtime();
-    matrixMultiplySerial2(a, b, c, m, n, p);
-    end = omp_get_wtime();
-    printf("Serial matrix multiplication took %f seconds.\n", end - start);
     
-
     // Parallel matrix multiplication
     setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
     start = omp_get_wtime();
@@ -68,31 +45,10 @@ int main(int argc, char *argv[]) {
     // printf("\nResult of Parallel Multiplication (OpenMP):\n");
     // printMatrix(c, m, p);
 
-    // Block matrix multiplication
-    setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
-    start = omp_get_wtime();
-    matrixMultiplyParallelBlock(a, b, c, m, n, p, block_size);
-    end = omp_get_wtime();
-    printf("Parallel block matrix multiplication took %f seconds.\n", end - start);
-
-    // Block matrix multiplication
-    setMatrixZeros(c, m, p); // reset all elements in result matrix to zeros
-    start = omp_get_wtime();
-    matrixMultiplyParallelBlockLoopUnrolling(a, b, c, m, n, p, block_size);
-    end = omp_get_wtime();
-    printf("Parallel block matrix multiplication LoopUnrolling took %f seconds.\n", end - start);
-    
-    // Transpose
-    setMatrixZeros(c, m, p);
-    start = omp_get_wtime();
-    matrixMultiplyParallelTranspose(a, b, c, m, n, p);
-    end = omp_get_wtime();
-    printf("Parallel transpose matrix multiplication took %f seconds.\n", end - start);
-
     // Strassen matrix multiplication(only m=n=p=2^k)
     if(n==m && m==p && (m & (m - 1)) == 0){
         start = omp_get_wtime();
-        omp_set_num_threads(8);
+        omp_set_num_threads(64);
         #pragma omp parallel
         {
         #pragma omp single
